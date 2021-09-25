@@ -50,7 +50,7 @@ func SQLDatabaseError(err error, sql string, params ...interface{}) *Error {
 		Code:           `SQL_DATABASE_ERROR`,
 		HTTPStatusCode: http.StatusInternalServerError,
 		Message:        err.Error(),
-		Debug: &map[string]interface{}{
+		Debug: map[string]interface{}{
 			"sql":    sql,
 			"params": params,
 		},
