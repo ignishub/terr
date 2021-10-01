@@ -14,6 +14,15 @@ type Error struct {
 	Debug map[string]interface{} `json:"debug,omitempty"`
 }
 
+// From returns Error structure from all kind of error types.
+func From(err error) *Error {
+	e, ok := err.(*Error)
+	if !ok {
+		e = InternalServerError("UNKNOWN_ERROR", err.Error())
+	}
+	return e
+}
+
 // Equal returns true if errors have same code.
 func Equal(err1, err2 Error) bool {
 	return err1.Code == err2.Code

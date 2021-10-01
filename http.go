@@ -14,13 +14,7 @@ func IncludeDebugInfo(value bool) {
 
 // ServeError serves error over http. When err is not Error it converts to InternalServerError.
 func ServeError(w http.ResponseWriter, err error) {
-	var e *Error
-	var ok bool
-	e, ok = err.(*Error)
-	if !ok {
-		e = InternalServerError("UNKNOWN_ERROR", err.Error())
-	}
-
+	e := From(err)
 	if !includeDebugInfo {
 		e.Debug = nil
 	}
