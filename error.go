@@ -1,4 +1,4 @@
-package apierror
+package terr
 
 // Error represents API error.
 type Error struct {

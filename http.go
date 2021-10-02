@@ -1,4 +1,4 @@
-package apierror
+package terr
 
 import (
 	"encoding/json"

@@ -1,3 +1,3 @@
-module github.com/ignishub/api-error
+module github.com/ignishub/terr
 
 go 1.16
