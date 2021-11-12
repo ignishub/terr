@@ -24,8 +24,14 @@ func From(err error) *Error {
 }
 
 // Equal returns true if errors have same code.
-func Equal(err1, err2 Error) bool {
-	return err1.Code == err2.Code
+func Equal(err1, err2 *Error) bool {
+	if err1 != nil && err2 != nil {
+		return err1.Code == err2.Code
+	}
+	if err1 == nil && err2 == nil {
+		return true
+	}
+	return false
 }
 
 // Error реализация интерфейса ошибки.
