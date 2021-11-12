@@ -18,6 +18,15 @@ func Forbidden() *Error {
 	}
 }
 
+// Conflict represents conflict error.
+func Conflict(code string, message string) *Error {
+	return &Error{
+		Code:           code,
+		HTTPStatusCode: http.StatusConflict,
+		Message:        message,
+	}
+}
+
 // NotFound represents not found error.
 func NotFound() *Error {
 	return &Error{
