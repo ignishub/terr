@@ -58,3 +58,11 @@ func (e *Error) WithDebug(field string, value interface{}) *Error {
 	e.Debug[field] = value
 	return e
 }
+
+func (e *Error) WithDetails(field string, value interface{}) *Error {
+	if e.Details == nil {
+		e.Details = make(map[string]interface{})
+	}
+	e.Details[field] = value
+	return e
+}
