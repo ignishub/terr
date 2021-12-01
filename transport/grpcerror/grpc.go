@@ -18,7 +18,10 @@ const (
 	codeMetadata    = "terr.code"
 )
 
-func decodeError(ctx context.Context, err error) *terr.Error {
+func decodeError(ctx context.Context, err error) error {
+	if err == nil {
+		return nil
+	}
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return terr.InternalServerError("INTERNAL_SERVER_ERROR", err.Error())
@@ -52,7 +55,10 @@ func decodeError(ctx context.Context, err error) *terr.Error {
 	return &e
 }
 
-func encodeError(ctx context.Context, err error, details, debug bool) *terr.Error {
+func encodeError(ctx context.Context, err error, details, debug bool) error {
+	if err == nil {
+		return nil
+	}
 	e := terr.From(err)
 	md := make(metadata.MD)
 
