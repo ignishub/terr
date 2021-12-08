@@ -83,8 +83,7 @@ func encodeError(ctx context.Context, err error, details, debug bool) error {
 			md.Append(debugMetadata, string(data))
 		}
 	}
-
-	ctx = metadata.NewOutgoingContext(ctx, md)
+	grpc.SetTrailer(ctx, md)
 	return e
 }
 
