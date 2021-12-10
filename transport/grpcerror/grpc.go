@@ -18,12 +18,11 @@ const (
 	codeMetadata    = "terr.code"
 )
 
-func decodeError(ctx context.Context, err error) error {
+func decodeError(ctx context.Context, err error, md *metadata.MD) error {
 	if err == nil {
 		return nil
 	}
-	md, ok := metadata.FromIncomingContext(ctx)
-	if !ok {
+	if md == nil {
 		return terr.InternalServerError("INTERNAL_SERVER_ERROR", err.Error())
 	}
 	var e terr.Error
@@ -107,6 +106,8 @@ func UnaryClientInterceptor(
 	invoker grpc.UnaryInvoker,
 	opts ...grpc.CallOption,
 ) error {
+	var trailer *metadata.MD
+	opts = append(opts, grpc.Trailer(trailer))
 	err := invoker(ctx, method, req, reply, cc, opts...)
-	return decodeError(ctx, err)
+	return decodeError(ctx, err, trailer)
 }
