@@ -5,11 +5,9 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"google.golang.org/grpc"
-
-	"google.golang.org/grpc/metadata"
-
 	"github.com/ignishub/terr"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 )
 
 const (
@@ -39,7 +37,6 @@ func decodeError(ctx context.Context, err error, md *metadata.MD) error {
 	debug := md.Get(debugMetadata)
 	if len(debug) > 0 {
 		for i := 0; i < len(debug); i = i + 2 {
-
 			e.WithDebug(debug[i], json.RawMessage(debug[i+1]))
 		}
 	}
@@ -82,7 +79,7 @@ func encodeError(ctx context.Context, err error, details, debug bool) error {
 			md.Append(debugMetadata, string(data))
 		}
 	}
-	grpc.SetTrailer(ctx, md)
+	grpc.SendHeader(ctx, md)
 	return e
 }
 
