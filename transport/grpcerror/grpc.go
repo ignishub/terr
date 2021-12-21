@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"strconv"
 
+	"google.golang.org/grpc/status"
+
 	"github.com/ignishub/terr"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
@@ -24,6 +26,11 @@ func decodeError(ctx context.Context, err error, md metadata.MD) error {
 		return terr.InternalServerError("INTERNAL_SERVER_ERROR", err.Error())
 	}
 	var e terr.Error
+
+	statusErr, ok := status.FromError(err)
+	if ok {
+		e.Message = statusErr.Message()
+	}
 
 	status := md.Get(codeMetadata)
 	if len(status) == 2 {
