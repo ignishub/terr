@@ -103,8 +103,8 @@ func UnaryClientInterceptor(
 	invoker grpc.UnaryInvoker,
 	opts ...grpc.CallOption,
 ) error {
-	var trailer *metadata.MD
-	opts = append(opts, grpc.Trailer(trailer))
+	var header *metadata.MD
+	opts = append(opts, grpc.Header(header))
 	err := invoker(ctx, method, req, reply, cc, opts...)
-	return decodeError(ctx, err, trailer)
+	return decodeError(ctx, err, header)
 }
