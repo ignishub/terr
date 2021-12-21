@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/kr/pretty"
-
 	"github.com/ignishub/terr"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
@@ -49,7 +47,6 @@ func decodeError(ctx context.Context, err error, md metadata.MD) error {
 			e.WithDebug(details[i], json.RawMessage(debug[i+1]))
 		}
 	}
-	pretty.Print(e)
 	return &e
 }
 
